@@ -29,13 +29,13 @@ export function FavoritesView({
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-      <div className="flex flex-col justify-between gap-4 border-b border-[#DFDDD2] pb-6 sm:flex-row sm:items-end">
+      <div className="flex flex-col justify-between gap-4 rounded-3xl border border-[#E6E0D0] bg-gradient-to-r from-[#FCEAE3]/70 via-[#FFFDF7] to-[#EFF7F0] p-6 sm:flex-row sm:items-end sm:p-8">
         <div>
-          <h1 className="font-editorial text-3xl font-semibold text-[#1A2B22] sm:text-4xl">
+          <h1 className="font-editorial text-3xl font-bold text-[#173326] sm:text-4xl">
             Daftar Favorit
           </h1>
-          <p className="mt-2 text-base text-[#4A5D52]">
-            Koleksi bacaan yang Anda simpan agar mudah ditemukan dan dibaca kembali kapan saja.
+          <p className="mt-2 text-base text-[#456354]">
+            Simpan bacaan kesukaanmu agar selalu siap dibaca kembali kapan saja.
           </p>
         </div>
 
@@ -43,7 +43,7 @@ export function FavoritesView({
           <button
             type="button"
             onClick={onOpenAuth}
-            className="rounded-lg border border-[#214232] bg-[#EDF1EC] px-4 py-2.5 text-sm font-medium text-[#1A2B22] hover:bg-[#DCE5DC] whitespace-nowrap cursor-pointer"
+            className="rounded-xl border border-[#ECD79A] bg-[#FDF1CC] px-4 py-2.5 text-sm font-semibold text-[#173326] hover:bg-[#FCE6A6] whitespace-nowrap cursor-pointer"
           >
             Masuk untuk Simpan Permanen
           </button>
@@ -51,21 +51,21 @@ export function FavoritesView({
       </div>
 
       {favoriteBooks.length === 0 ? (
-        <div className="mt-10 rounded-2xl border border-[#DFDDD2] bg-[#FBF9F4] px-6 py-14 text-center">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#EDF1EC] text-[#214232]">
+        <div className="mt-8 rounded-3xl border border-[#E6E0D0] bg-white px-6 py-14 text-center">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FCEAE3] text-[#BA4A2B]">
             <Heart className="h-5 w-5" aria-hidden="true" />
           </div>
-          <h2 className="mt-4 font-editorial text-xl font-semibold text-[#1A2B22]">
-            Daftar favorit Anda masih kosong
+          <h2 className="mt-4 font-editorial text-xl font-bold text-[#173326]">
+            Daftar favoritmu masih kosong
           </h2>
-          <p className="mx-auto mt-2 max-w-md text-sm text-[#4A5D52]">
-            Tekan tombol ikon hati pada buku di katalog untuk menyimpan bacaan yang ingin Anda
-            kunjungi kembali nanti.
+          <p className="mx-auto mt-2 max-w-md text-sm text-[#456354]">
+            Tekan ikon hati pada buku di katalog untuk menyimpan bacaan pilihan yang ingin kamu
+            nikmati lagi nanti.
           </p>
           <button
             type="button"
             onClick={onExploreCatalog}
-            className="mt-6 rounded-lg bg-[#214232] px-5 py-2.5 text-sm font-medium text-[#FBF9F4] hover:bg-[#183326] cursor-pointer"
+            className="mt-6 rounded-xl bg-[#1F563E] px-5 py-2.5 text-sm font-semibold text-[#FFFDF7] hover:bg-[#17422F] cursor-pointer"
           >
             Jelajahi Katalog
           </button>

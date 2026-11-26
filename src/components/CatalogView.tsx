@@ -69,13 +69,13 @@ export function CatalogView({
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-      <div className="border-b border-[#DFDDD2] pb-6">
-        <h1 className="font-editorial text-3xl font-semibold text-[#1A2B22] sm:text-4xl">
+      <div className="rounded-3xl border border-[#E6E0D0] bg-gradient-to-r from-[#EFF7F0] via-[#FFFDF7] to-[#FEF8E7] p-6 sm:p-8">
+        <h1 className="font-editorial text-3xl font-bold text-[#173326] sm:text-4xl">
           Katalog Digital SENA
         </h1>
-        <p className="mt-2 max-w-2xl text-base text-[#4A5D52]">
-          Telusuri seluruh koleksi berdasarkan judul, penulis, kategori, ketersediaan pinjam, maupun
-          dukungan aksesibilitas baca.
+        <p className="mt-2 max-w-2xl text-base text-[#456354]">
+          Temukan bacaan favoritmu berdasarkan judul, penulis, kategori, ketersediaan pinjam, atau
+          fitur aksesibilitas baca.
         </p>
       </div>
 
@@ -84,7 +84,7 @@ export function CatalogView({
         <div className="grid gap-3 md:grid-cols-12">
           <div className="relative md:col-span-6">
             <Search
-              className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-[#4A5D52]"
+              className="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-[#456354]"
               aria-hidden="true"
             />
             <label htmlFor="catalog-search" className="sr-only">
@@ -96,14 +96,14 @@ export function CatalogView({
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder="Cari judul buku, nama penulis, topik, atau ISBN..."
-              className="h-11 w-full rounded-lg border border-[#CBD3CA] bg-[#FBF9F4] pr-10 pl-10 text-sm text-[#1A2B22] placeholder:text-[#6B7E72] focus:border-[#214232] focus:outline-none"
+              className="h-11 w-full rounded-xl border border-[#D8D2C2] bg-white pr-10 pl-10 text-sm text-[#173326] placeholder:text-[#6D8578] focus:border-[#1F563E] focus:outline-none"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => onSearchChange('')}
                 aria-label="Hapus kata pencarian"
-                className="absolute top-1/2 right-2.5 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-md text-[#4A5D52] hover:bg-[#EDF1EC] cursor-pointer"
+                className="absolute top-1/2 right-2.5 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-lg text-[#456354] hover:bg-[#EFF7F0] cursor-pointer"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -120,7 +120,7 @@ export function CatalogView({
               onChange={(e) =>
                 onAvailabilityChange(e.target.value as 'all' | 'available' | 'borrowed')
               }
-              className="h-11 w-full rounded-lg border border-[#CBD3CA] bg-[#FBF9F4] px-3 text-sm text-[#1A2B22] focus:border-[#214232] focus:outline-none cursor-pointer"
+              className="h-11 w-full rounded-xl border border-[#D8D2C2] bg-white px-3 text-sm text-[#173326] focus:border-[#1F563E] focus:outline-none cursor-pointer"
             >
               <option value="all">Semua Status</option>
               <option value="available">Tersedia Dipinjam</option>
@@ -138,7 +138,7 @@ export function CatalogView({
               onChange={(e) =>
                 onAccessibilityChange(e.target.value as AccessibilityFeature | 'Semua')
               }
-              className="h-11 w-full rounded-lg border border-[#CBD3CA] bg-[#FBF9F4] px-3 text-sm text-[#1A2B22] focus:border-[#214232] focus:outline-none cursor-pointer"
+              className="h-11 w-full rounded-xl border border-[#D8D2C2] bg-white px-3 text-sm text-[#173326] focus:border-[#1F563E] focus:outline-none cursor-pointer"
             >
               {ACCESSIBILITY_OPTIONS.map((opt) => (
                 <option key={opt} value={opt}>
@@ -156,7 +156,7 @@ export function CatalogView({
               id="sort-select"
               value={sortBy}
               onChange={(e) => onSortChange(e.target.value as 'newest' | 'title-asc' | 'popular')}
-              className="h-11 w-full rounded-lg border border-[#CBD3CA] bg-[#FBF9F4] px-3 text-sm text-[#1A2B22] focus:border-[#214232] focus:outline-none cursor-pointer"
+              className="h-11 w-full rounded-xl border border-[#D8D2C2] bg-white px-3 text-sm text-[#173326] focus:border-[#1F563E] focus:outline-none cursor-pointer"
             >
               <option value="newest">Terbaru</option>
               <option value="title-asc">Judul A–Z</option>
@@ -180,10 +180,10 @@ export function CatalogView({
                 role="tab"
                 aria-selected={active}
                 onClick={() => onCategoryChange(cat)}
-                className={`rounded-lg px-3.5 py-2 text-sm font-medium transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+                className={`rounded-xl px-3.5 py-2 text-sm font-medium transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                   active
-                    ? 'bg-[#214232] text-[#FBF9F4]'
-                    : 'border border-[#DFDDD2] bg-[#FBF9F4] text-[#4A5D52] hover:bg-[#EDF1EC] hover:text-[#1A2B22]'
+                    ? 'bg-[#1F563E] text-[#FFFDF7]'
+                    : 'border border-[#E6E0D0] bg-white text-[#456354] hover:bg-[#FDF5DC] hover:text-[#173326]'
                 }`}
               >
                 {cat}
@@ -194,17 +194,17 @@ export function CatalogView({
       </div>
 
       {/* Results Header */}
-      <div className="mt-6 flex items-center justify-between text-sm text-[#4A5D52]">
+      <div className="mt-6 flex items-center justify-between text-sm text-[#456354]">
         <p>
           Menampilkan{' '}
-          <span className="font-mono font-medium tabular-nums text-[#1A2B22]">{books.length}</span>{' '}
+          <span className="font-mono font-semibold tabular-nums text-[#173326]">{books.length}</span>{' '}
           judul buku
         </p>
         {hasActiveFilters && (
           <button
             type="button"
             onClick={onResetFilters}
-            className="font-medium text-[#214232] hover:underline cursor-pointer"
+            className="font-semibold text-[#1F563E] hover:underline cursor-pointer"
           >
             Atur ulang filter
           </button>
@@ -217,23 +217,22 @@ export function CatalogView({
           {[1, 2, 3, 4].map((idx) => (
             <div
               key={idx}
-              className="h-96 animate-pulse rounded-xl border border-[#DFDDD2] bg-[#F0ECE1]"
+              className="h-96 animate-pulse rounded-2xl border border-[#E6E0D0] bg-[#F5F0E2]"
             />
           ))}
         </div>
       ) : books.length === 0 ? (
-        <div className="mt-8 rounded-2xl border border-[#DFDDD2] bg-[#FBF9F4] px-6 py-14 text-center">
-          <h2 className="font-editorial text-xl font-semibold text-[#1A2B22]">
-            Tidak ada buku yang cocok dengan pencarian Anda
+        <div className="mt-8 rounded-2xl border border-[#E6E0D0] bg-white px-6 py-14 text-center">
+          <h2 className="font-editorial text-xl font-bold text-[#173326]">
+            Belum ada buku yang cocok dengan pencarianmu
           </h2>
-          <p className="mx-auto mt-2 max-w-md text-sm text-[#4A5D52]">
-            Coba gunakan kata kunci yang lebih umum atau atur ulang pilihan kategori dan filter
-            aksesibilitas.
+          <p className="mx-auto mt-2 max-w-md text-sm text-[#456354]">
+            Coba gunakan kata kunci yang lebih umum atau tampilkan kembali seluruh koleksi katalog.
           </p>
           <button
             type="button"
             onClick={onResetFilters}
-            className="mt-5 rounded-lg bg-[#214232] px-5 py-2.5 text-sm font-medium text-[#FBF9F4] hover:bg-[#183326] cursor-pointer"
+            className="mt-5 rounded-xl bg-[#1F563E] px-5 py-2.5 text-sm font-semibold text-[#FFFDF7] hover:bg-[#17422F] cursor-pointer"
           >
             Tampilkan Semua Koleksi
           </button>

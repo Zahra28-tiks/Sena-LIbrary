@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, BookOpen, Eye, Headphones, Type } from 'lucide-react';
+import { ArrowRight, BookOpen, Eye, Headphones, Sun, Type } from 'lucide-react';
 import { Book, BookCategory } from '../types/library.ts';
 import { BookCard } from './BookCard.tsx';
 
@@ -13,13 +13,48 @@ interface HomeViewProps {
   onToggleFavorite: (bookId: string) => void;
 }
 
-const CATEGORIES: { name: BookCategory; description: string }[] = [
-  { name: 'Sastra & Fiksi', description: 'Cerita hangat lintas generasi dengan bahasa jernih.' },
-  { name: 'Sains & Ekologi', description: 'Pengetahuan alam dan lingkungan yang membumi.' },
-  { name: 'Sejarah & Budaya', description: 'Jejak peradaban dan desain ruang publik inklusif.' },
-  { name: 'Pendidikan & Inklusi', description: 'Panduan belajar terbuka untuk pendidik dan keluarga.' },
-  { name: 'Pengembangan Diri', description: 'Bacaan tenang untuk fokus dan keseharian.' },
-  { name: 'Cerita Anak & Remaja', description: 'Kisah ramah pembaca pemula dengan huruf lega.' },
+const CATEGORIES: {
+  name: BookCategory;
+  description: string;
+  surfaceClass: string;
+  borderClass: string;
+}[] = [
+  {
+    name: 'Sastra & Fiksi',
+    description: 'Cerita hangat lintas generasi dengan bahasa yang mengalir ringan.',
+    surfaceClass: 'bg-[#F2F8F3] hover:bg-[#E4F2E7]',
+    borderClass: 'border-[#CFE3D2]',
+  },
+  {
+    name: 'Sains & Ekologi',
+    description: 'Jelajahi keajaiban alam dan lingkungan dengan penjelasan membumi.',
+    surfaceClass: 'bg-[#FEF8E7] hover:bg-[#FCEEC5]',
+    borderClass: 'border-[#EFE0B1]',
+  },
+  {
+    name: 'Sejarah & Budaya',
+    description: 'Kisah peradaban Nusantara dan ruang publik yang ramah bersama.',
+    surfaceClass: 'bg-[#FDF1EB] hover:bg-[#FAE1D5]',
+    borderClass: 'border-[#F0CFC0]',
+  },
+  {
+    name: 'Pendidikan & Inklusi',
+    description: 'Panduan belajar terbuka untuk pelajar, pendidik, dan keluarga.',
+    surfaceClass: 'bg-[#EDF6F4] hover:bg-[#DCEEE9]',
+    borderClass: 'border-[#C6E1DA]',
+  },
+  {
+    name: 'Pengembangan Diri',
+    description: 'Bacaan positif untuk menjaga fokus, semangat, dan ketenangan.',
+    surfaceClass: 'bg-[#FAF5E8] hover:bg-[#F5E9CB]',
+    borderClass: 'border-[#E8DAB8]',
+  },
+  {
+    name: 'Cerita Anak & Remaja',
+    description: 'Petualangan penuh imajinasi dengan huruf lega dan ramah pemula.',
+    surfaceClass: 'bg-[#F0F7ED] hover:bg-[#E0EFE0]',
+    borderClass: 'border-[#CEE2C9]',
+  },
 ];
 
 export function HomeView({
@@ -41,26 +76,29 @@ export function HomeView({
 
   return (
     <div>
-      {/* Hero Split Section */}
+      {/* Cheerful Split Hero Section */}
       <section className="mx-auto max-w-6xl px-4 pt-10 pb-8 sm:px-6 lg:pt-14">
         <div className="grid items-stretch gap-8 lg:grid-cols-12 lg:gap-12">
           <div className="flex flex-col justify-center lg:col-span-6">
-            <p className="text-sm font-medium tracking-wide text-[#4A5D52]">
-              Perpustakaan Digital Inklusif
-            </p>
-            <h1 className="mt-3 font-editorial text-4xl font-semibold leading-[1.15] tracking-tight text-[#1A2B22] text-balance sm:text-5xl">
-              Ruang baca yang tenang, terbuka, dan ramah untuk semua.
+            <div className="inline-flex items-center gap-2 text-sm font-semibold text-[#1F563E]">
+              <Sun className="h-4 w-4 text-[#D99B26]" aria-hidden="true" />
+              <span>Selamat Datang di SENA LIBRARY</span>
+            </div>
+
+            <h1 className="mt-3 font-editorial text-4xl font-bold leading-[1.15] tracking-tight text-[#173326] text-balance sm:text-5xl">
+              Temukan bacaan seru yang bikin harimu lebih cerah.
             </h1>
-            <p className="mt-5 max-w-xl text-base leading-relaxed text-[#4A5D52] sm:text-lg">
-              SENA LIBRARY menghadirkan koleksi bacaan pilihan dengan tampilan lembut di mata,
-              pengaturan huruf fleksibel, dan akses peminjaman yang sederhana bagi seluruh kalangan.
+
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-[#456354] sm:text-lg">
+              Perpustakaan digital inklusif yang ceria, nyaman di mata, dan terbuka hangat untuk
+              semua kalangan—lengkap dengan pengaturan huruf fleksibel dan peminjaman praktis.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <button
                 type="button"
                 onClick={() => onNavigateCatalog('Semua')}
-                className="inline-flex items-center gap-2 rounded-lg bg-[#214232] px-6 py-3 text-base font-medium text-[#FBF9F4] transition-colors hover:bg-[#183326] whitespace-nowrap cursor-pointer"
+                className="inline-flex items-center gap-2 rounded-xl bg-[#1F563E] px-6 py-3.5 text-base font-semibold text-[#FFFDF7] shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#17422F] whitespace-nowrap cursor-pointer"
               >
                 <span>Jelajahi Katalog</span>
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -70,9 +108,9 @@ export function HomeView({
                 <button
                   type="button"
                   onClick={() => onReadBook(displayBooks[0])}
-                  className="inline-flex items-center gap-2 rounded-lg border border-[#CBD3CA] bg-[#FBF9F4] px-5 py-3 text-base font-medium text-[#1A2B22] transition-colors hover:bg-[#EDF1EC] whitespace-nowrap cursor-pointer"
+                  className="inline-flex items-center gap-2 rounded-xl border border-[#ECD79A] bg-[#FDF1CC] px-5 py-3.5 text-base font-semibold text-[#173326] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#FCE6A6] whitespace-nowrap cursor-pointer"
                 >
-                  <BookOpen className="h-4 w-4 text-[#214232]" aria-hidden="true" />
+                  <BookOpen className="h-4 w-4 text-[#1F563E]" aria-hidden="true" />
                   <span>Coba Digital Reader</span>
                 </button>
               )}
@@ -81,51 +119,52 @@ export function HomeView({
 
           <div className="lg:col-span-6">
             {!heroImgFailed ? (
-              <div className="h-full min-h-[280px] overflow-hidden rounded-2xl border border-[#DFDDD2] bg-[#EAE6DA]">
+              <div className="h-full min-h-[280px] overflow-hidden rounded-3xl border border-[#E6E0D0] bg-[#FAF4E4] shadow-sm">
                 <img
-                  src="/src/assets/images/hero_sena_library_1795659417977.jpg"
-                  alt="Suasana ruang baca SENA LIBRARY yang tenang dengan pencahayaan alami, meja kayu, dan kursi hijau sage"
+                  src="/src/assets/images/hero_sena_cheerful_1795661176395.jpg"
+                  alt="Suasana ceria ruang baca SENA LIBRARY yang bermandikan cahaya matahari pagi dengan pembaca dari berbagai usia"
                   referrerPolicy="no-referrer"
                   onError={() => setHeroImgFailed(true)}
                   className="h-full w-full object-cover"
                 />
               </div>
             ) : (
-              <div className="flex h-full min-h-[300px] flex-col justify-end rounded-2xl border border-[#DFDDD2] bg-gradient-to-br from-[#EFECE3] via-[#DDE5DD] to-[#C8D6C8] p-8">
-                <p className="font-editorial text-2xl font-semibold text-[#1A2B22]">
-                  Ruang Baca Terbuka SENA
+              <div className="flex h-full min-h-[300px] flex-col justify-end rounded-3xl border border-[#E6E0D0] bg-gradient-to-br from-[#FEF6DB] via-[#E9F3EA] to-[#D4E8D7] p-8">
+                <p className="font-editorial text-2xl font-bold text-[#173326]">
+                  Ruang Baca Ceria SENA
                 </p>
-                <p className="mt-2 text-sm text-[#4A5D52]">
-                  Akses literasi yang nyaman, tenang, dan inklusif kapan saja.
+                <p className="mt-2 text-sm text-[#456354]">
+                  Akses literasi yang hangat, menyenangkan, dan inklusif kapan saja.
                 </p>
               </div>
             )}
           </div>
         </div>
 
-        {/* Full-Width 4-Column Library Operational Strip */}
-        <div className="mt-10 grid grid-cols-2 divide-y divide-[#DFDDD2] rounded-xl border border-[#DFDDD2] bg-[#FBF9F4] sm:grid-cols-4 sm:divide-x sm:divide-y-0">
+        {/* Full-Width 4-Column Operational Strip */}
+        <div className="mt-10 grid grid-cols-2 divide-y divide-[#E6E0D0] rounded-2xl border border-[#E6E0D0] bg-white sm:grid-cols-4 sm:divide-x sm:divide-y-0">
           <div className="p-5">
-            <p className="text-xs font-medium text-[#4A5D52]">Judul Koleksi</p>
-            <p className="mt-1 font-mono text-2xl font-medium tabular-nums text-[#1A2B22]">
+            <p className="text-xs font-semibold text-[#456354]">Judul Koleksi</p>
+            <p className="mt-1 font-mono text-2xl font-semibold tabular-nums text-[#1F563E]">
               {books.length}
             </p>
           </div>
           <div className="p-5">
-            <p className="text-xs font-medium text-[#4A5D52]">Eksemplar Tersedia</p>
-            <p className="mt-1 font-mono text-2xl font-medium tabular-nums text-[#1A2B22]">
-              {availableCopies} <span className="text-sm font-normal text-[#4A5D52]">/ {totalCopies}</span>
+            <p className="text-xs font-semibold text-[#456354]">Eksemplar Tersedia</p>
+            <p className="mt-1 font-mono text-2xl font-semibold tabular-nums text-[#1F563E]">
+              {availableCopies}{' '}
+              <span className="text-sm font-normal text-[#456354]">/ {totalCopies}</span>
             </p>
           </div>
           <div className="p-5">
-            <p className="text-xs font-medium text-[#4A5D52]">Kategori Inklusif</p>
-            <p className="mt-1 font-mono text-2xl font-medium tabular-nums text-[#1A2B22]">
+            <p className="text-xs font-semibold text-[#456354]">Kategori Ceria</p>
+            <p className="mt-1 font-mono text-2xl font-semibold tabular-nums text-[#1F563E]">
               {CATEGORIES.length}
             </p>
           </div>
           <div className="p-5">
-            <p className="text-xs font-medium text-[#4A5D52]">Total Pembacaan</p>
-            <p className="mt-1 font-mono text-2xl font-medium tabular-nums text-[#1A2B22]">
+            <p className="text-xs font-semibold text-[#456354]">Total Pembacaan</p>
+            <p className="mt-1 font-mono text-2xl font-semibold tabular-nums text-[#1F563E]">
               {totalReads}
             </p>
           </div>
@@ -134,19 +173,19 @@ export function HomeView({
 
       {/* Kategori Koleksi */}
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        <div className="flex flex-col justify-between gap-3 border-b border-[#DFDDD2] pb-4 sm:flex-row sm:items-end">
+        <div className="flex flex-col justify-between gap-3 border-b border-[#E6E0D0] pb-4 sm:flex-row sm:items-end">
           <div>
-            <h2 className="font-editorial text-2xl font-semibold text-[#1A2B22] sm:text-3xl">
-              Kategori Koleksi
+            <h2 className="font-editorial text-2xl font-bold text-[#173326] sm:text-3xl">
+              Kategori Bacaan Pilihan
             </h2>
-            <p className="mt-1 text-sm text-[#4A5D52]">
-              Pilih bidang bacaan sesuai minat dan kebutuhan belajar Anda.
+            <p className="mt-1 text-sm text-[#456354]">
+              Pilih topik favoritmu dan mulai membaca sesuai suasana hati hari ini.
             </p>
           </div>
           <button
             type="button"
             onClick={() => onNavigateCatalog('Semua')}
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-[#214232] hover:underline whitespace-nowrap cursor-pointer"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#1F563E] hover:underline whitespace-nowrap cursor-pointer"
           >
             <span>Lihat semua kategori</span>
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -161,17 +200,17 @@ export function HomeView({
                 key={cat.name}
                 type="button"
                 onClick={() => onNavigateCatalog(cat.name)}
-                className="group flex flex-col justify-between rounded-xl border border-[#DFDDD2] bg-[#FBF9F4] p-5 text-left transition-colors hover:border-[#8AA38D] hover:bg-[#F1F4EF] cursor-pointer"
+                className={`group flex flex-col justify-between rounded-2xl border p-5 text-left transition-all duration-200 hover:-translate-y-0.5 cursor-pointer ${cat.surfaceClass} ${cat.borderClass}`}
               >
                 <div className="flex items-baseline justify-between gap-4">
-                  <h3 className="font-editorial text-lg font-semibold text-[#1A2B22] group-hover:text-[#214232]">
+                  <h3 className="font-editorial text-lg font-bold text-[#173326] group-hover:text-[#1F563E]">
                     {cat.name}
                   </h3>
-                  <span className="font-mono text-xs tabular-nums text-[#4A5D52]">
+                  <span className="font-mono text-xs font-medium tabular-nums text-[#456354]">
                     {count} buku
                   </span>
                 </div>
-                <p className="mt-2 text-sm leading-relaxed text-[#4A5D52]">{cat.description}</p>
+                <p className="mt-2 text-sm leading-relaxed text-[#3E584A]">{cat.description}</p>
               </button>
             );
           })}
@@ -180,19 +219,19 @@ export function HomeView({
 
       {/* Koleksi Pilihan */}
       <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
-        <div className="flex flex-col justify-between gap-3 border-b border-[#DFDDD2] pb-4 sm:flex-row sm:items-end">
+        <div className="flex flex-col justify-between gap-3 border-b border-[#E6E0D0] pb-4 sm:flex-row sm:items-end">
           <div>
-            <h2 className="font-editorial text-2xl font-semibold text-[#1A2B22] sm:text-3xl">
-              Koleksi Pilihan Bulan Ini
+            <h2 className="font-editorial text-2xl font-bold text-[#173326] sm:text-3xl">
+              Rekomendasi Hangat Bulan Ini
             </h2>
-            <p className="mt-1 text-sm text-[#4A5D52]">
-              Bacaan kurasi yang siap langsung Anda baca secara digital atau dipinjam.
+            <p className="mt-1 text-sm text-[#456354]">
+              Buku-buku favorit anggota yang siap menemani waktu santai maupun belajarmu.
             </p>
           </div>
           <button
             type="button"
             onClick={() => onNavigateCatalog('Semua')}
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-[#214232] hover:underline whitespace-nowrap cursor-pointer"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#1F563E] hover:underline whitespace-nowrap cursor-pointer"
           >
             <span>Buka katalog lengkap</span>
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -216,48 +255,54 @@ export function HomeView({
 
       {/* Komitmen Inklusivitas */}
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        <div className="rounded-2xl border border-[#D4DCD2] bg-[#EAF0E8] p-6 sm:p-10">
+        <div className="rounded-3xl border border-[#CFE3D2] bg-gradient-to-br from-[#ECF6EE] via-[#F4F9F2] to-[#FEF8E7] p-6 sm:p-10">
           <div className="max-w-2xl">
-            <h2 className="font-editorial text-2xl font-semibold text-[#1A2B22] sm:text-3xl text-balance">
-              Pengalaman membaca yang menyesuaikan kebutuhan Anda
+            <h2 className="font-editorial text-2xl font-bold text-[#173326] sm:text-3xl text-balance">
+              Membaca jadi menyenangkan untuk setiap cara belajar
             </h2>
-            <p className="mt-2 text-base text-[#3D5245]">
-              Setiap pembaca memiliki kenyamanan berbeda. Digital Reader SENA LIBRARY dilengkapi
-              kontrol aksesibilitas langsung tanpa pengaturan rumit.
+            <p className="mt-2 text-base text-[#3E584A]">
+              Sesuaikan tampilan Digital Reader SENA LIBRARY hanya dengan sekali sentuh agar mata
+              tetap segar dan nyaman.
             </p>
           </div>
 
           <div className="mt-8 grid gap-6 md:grid-cols-3">
-            <div className="rounded-xl border border-[#CBD6C8] bg-[#FBF9F4] p-5">
-              <Type className="h-5 w-5 text-[#214232]" aria-hidden="true" />
-              <h3 className="mt-3 text-base font-semibold text-[#1A2B22]">
+            <div className="rounded-2xl border border-[#D8E5D8] bg-white p-5">
+              <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#FDF1CC] text-[#1F563E]">
+                <Type className="h-5 w-5" aria-hidden="true" />
+              </div>
+              <h3 className="mt-3 text-base font-bold text-[#173326]">
                 Ukuran & Gaya Huruf Fleksibel
               </h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-[#4A5D52]">
-                Perbesar teks hingga 26px, atur jarak antarbaris lega, serta pilih huruf sans-serif
-                yang ramah bagi pembaca disleksia.
+              <p className="mt-1.5 text-sm leading-relaxed text-[#456354]">
+                Perbesar teks hingga 26px, atur jarak baris lega, dan pilih huruf sans-serif ramah
+                pembaca disleksia.
               </p>
             </div>
 
-            <div className="rounded-xl border border-[#CBD6C8] bg-[#FBF9F4] p-5">
-              <Eye className="h-5 w-5 text-[#214232]" aria-hidden="true" />
-              <h3 className="mt-3 text-base font-semibold text-[#1A2B22]">
+            <div className="rounded-2xl border border-[#D8E5D8] bg-white p-5">
+              <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#E5F2E7] text-[#1F563E]">
+                <Eye className="h-5 w-5" aria-hidden="true" />
+              </div>
+              <h3 className="mt-3 text-base font-bold text-[#173326]">
                 Warna Lembut Bebas Silau
               </h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-[#4A5D52]">
-                Pilih latar kertas krem hangat, putih bersih, atau hijau malam lembut serta panduan
-                fokus baris saat membaca lama.
+              <p className="mt-1.5 text-sm leading-relaxed text-[#456354]">
+                Pilih latar krem hangat, putih bersih, atau hijau malam lembut serta fitur fokus
+                baris agar membaca lebih betah.
               </p>
             </div>
 
-            <div className="rounded-xl border border-[#CBD6C8] bg-[#FBF9F4] p-5">
-              <Headphones className="h-5 w-5 text-[#214232]" aria-hidden="true" />
-              <h3 className="mt-3 text-base font-semibold text-[#1A2B22]">
+            <div className="rounded-2xl border border-[#D8E5D8] bg-white p-5">
+              <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#FCEAE3] text-[#B84A2B]">
+                <Headphones className="h-5 w-5" aria-hidden="true" />
+              </div>
+              <h3 className="mt-3 text-base font-bold text-[#173326]">
                 Fitur Baca Suara Terpadu
               </h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-[#4A5D52]">
-                Dengarkan isi bab langsung melalui pemutar suara peramban untuk membantu pembaca
-                dengan hambatan penglihatan atau kelelahan mata.
+              <p className="mt-1.5 text-sm leading-relaxed text-[#456354]">
+                Dengarkan isi bab langsung melalui pemutar suara peramban untuk pengalaman membaca
+                yang lebih inklusif.
               </p>
             </div>
           </div>

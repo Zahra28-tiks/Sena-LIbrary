@@ -9,8 +9,8 @@
 @layer base {
   html {
     font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
-    background-color: #f8f5ee;
-    color: #1a2b22;
+    background-color: #fffdf7;
+    color: #173326;
     scroll-behavior: smooth;
   }
 
@@ -20,9 +20,8 @@
     font-family: "Fraunces", Georgia, serif;
   }
 
-  /* Accessible visible focus ring */
   :focus-visible {
-    outline: 2px solid #214232;
+    outline: 2px solid #1f563e;
     outline-offset: 2px;
   }
 }

@@ -341,7 +341,7 @@ export default function App() {
     : undefined;
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#F8F5EE] text-[#1A2B22]">
+    <div className="flex min-h-screen flex-col bg-[#FFFDF7] text-[#173326]">
       <Navbar
         activeView={activeView}
         onNavigate={handleNavigate}
@@ -443,19 +443,19 @@ export default function App() {
         onSuccess={handleAuthSuccess}
       />
 
-      {/* Calm Accessible Notification Toast */}
+      {/* Cheerful Accessible Notification Toast */}
       {toastMessage && (
         <div
           role="status"
           aria-live="polite"
-          className="fixed right-4 bottom-4 z-50 flex max-w-sm items-center justify-between gap-3 rounded-xl border border-[#214232] bg-[#214232] px-4 py-3 text-sm text-[#FBF9F4] shadow-lg"
+          className="fixed right-4 bottom-4 z-50 flex max-w-sm items-center justify-between gap-3 rounded-2xl border border-[#1F563E] bg-[#1F563E] px-4 py-3 text-sm font-medium text-[#FFFDF7] shadow-lg"
         >
           <span>{toastMessage}</span>
           <button
             type="button"
             onClick={() => setToastMessage(null)}
             aria-label="Tutup pemberitahuan"
-            className="rounded p-1 hover:bg-white/10 cursor-pointer"
+            className="rounded-lg p-1 hover:bg-white/15 cursor-pointer"
           >
             <X className="h-4 w-4" />
           </button>

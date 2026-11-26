@@ -116,7 +116,6 @@ export function AdminView({
     needsInitialClaim: boolean;
   } | null>(null);
 
-  // Admin auth state
   const [authName, setAuthName] = useState('');
   const [authEmail, setAuthEmail] = useState('');
   const [authPassword, setAuthPassword] = useState('');
@@ -124,14 +123,12 @@ export function AdminView({
   const [authError, setAuthError] = useState('');
   const [authLoading, setAuthLoading] = useState(false);
 
-  // Dashboard state
   const [activeTab, setActiveTab] = useState<'books' | 'members' | 'loans'>('books');
   const [overview, setOverview] = useState<AdminOverviewResponse | null>(null);
   const [loadingOverview, setLoadingOverview] = useState(false);
   const [tableSearch, setTableSearch] = useState('');
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
-  // Book Modal state
   const [bookModalOpen, setBookModalOpen] = useState(false);
   const [editingBookId, setEditingBookId] = useState<string | null>(null);
   const [bookForm, setBookForm] = useState<BookFormState>(EMPTY_FORM);
@@ -376,22 +373,21 @@ export function AdminView({
     }
   };
 
-  // --- Non-Admin Gate (First-Run Claim / Passcode / Admin Login) ---
   if (!isAdmin) {
     return (
       <section className="mx-auto max-w-lg px-4 py-12 sm:px-6">
-        <div className="rounded-2xl border border-[#DFDDD2] bg-[#FBF9F4] p-6 sm:p-8">
-          <div className="flex items-center gap-2.5 text-[#214232]">
+        <div className="rounded-3xl border border-[#E6E0D0] bg-white p-6 shadow-sm sm:p-8">
+          <div className="flex items-center gap-2.5 text-[#1F563E]">
             <ShieldCheck className="h-5 w-5" aria-hidden="true" />
             <span className="text-sm font-semibold">Panel Pengelola SENA LIBRARY</span>
           </div>
 
           {bootstrap?.needsInitialClaim ? (
             <>
-              <h1 className="mt-3 font-editorial text-2xl font-semibold text-[#1A2B22]">
+              <h1 className="mt-3 font-editorial text-2xl font-bold text-[#173326]">
                 Aktivasi Administrator Pertama
               </h1>
-              <p className="mt-2 text-sm leading-relaxed text-[#4A5D52]">
+              <p className="mt-2 text-sm leading-relaxed text-[#456354]">
                 Belum ada akun administrator yang terdaftar. Buat akun pengelola pertama Anda untuk
                 mulai mengelola koleksi buku, anggota, dan peminjaman.
               </p>
@@ -399,7 +395,7 @@ export function AdminView({
               {authError && (
                 <div
                   role="alert"
-                  className="mt-4 rounded-lg border border-[#D8B4B4] bg-[#FBF2F2] px-3.5 py-2.5 text-sm text-[#7F2D2D]"
+                  className="mt-4 rounded-xl border border-[#E69A7E] bg-[#FCEAE3] px-3.5 py-2.5 text-sm text-[#9B3318]"
                 >
                   {authError}
                 </div>
@@ -407,7 +403,7 @@ export function AdminView({
 
               <form onSubmit={handleClaimAdmin} className="mt-5 space-y-4">
                 <div>
-                  <label htmlFor="claim-name" className="block text-sm font-medium text-[#1A2B22]">
+                  <label htmlFor="claim-name" className="block text-sm font-semibold text-[#173326]">
                     Nama Pengelola
                   </label>
                   <input
@@ -418,11 +414,11 @@ export function AdminView({
                     value={authName}
                     onChange={(e) => setAuthName(e.target.value)}
                     placeholder="Nama lengkap administrator"
-                    className="mt-1.5 h-11 w-full rounded-lg border border-[#CBD3CA] bg-white px-3.5 text-sm focus:border-[#214232] focus:outline-none"
+                    className="mt-1.5 h-11 w-full rounded-xl border border-[#D8D2C2] bg-white px-3.5 text-sm focus:border-[#1F563E] focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label htmlFor="claim-email" className="block text-sm font-medium text-[#1A2B22]">
+                  <label htmlFor="claim-email" className="block text-sm font-semibold text-[#173326]">
                     Email Administrator
                   </label>
                   <input
@@ -432,13 +428,13 @@ export function AdminView({
                     value={authEmail}
                     onChange={(e) => setAuthEmail(e.target.value)}
                     placeholder="admin@senalibrary.id"
-                    className="mt-1.5 h-11 w-full rounded-lg border border-[#CBD3CA] bg-white px-3.5 text-sm focus:border-[#214232] focus:outline-none"
+                    className="mt-1.5 h-11 w-full rounded-xl border border-[#D8D2C2] bg-white px-3.5 text-sm focus:border-[#1F563E] focus:outline-none"
                   />
                 </div>
                 <div>
                   <label
                     htmlFor="claim-password"
-                    className="block text-sm font-medium text-[#1A2B22]"
+                    className="block text-sm font-semibold text-[#173326]"
                   >
                     Kata Sandi
                   </label>
@@ -450,13 +446,13 @@ export function AdminView({
                     value={authPassword}
                     onChange={(e) => setAuthPassword(e.target.value)}
                     placeholder="Minimal 6 karakter"
-                    className="mt-1.5 h-11 w-full rounded-lg border border-[#CBD3CA] bg-white px-3.5 text-sm focus:border-[#214232] focus:outline-none"
+                    className="mt-1.5 h-11 w-full rounded-xl border border-[#D8D2C2] bg-white px-3.5 text-sm focus:border-[#1F563E] focus:outline-none"
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={authLoading}
-                  className="w-full rounded-lg bg-[#214232] py-3 text-sm font-medium text-[#FBF9F4] hover:bg-[#183326] disabled:opacity-60 cursor-pointer"
+                  className="w-full rounded-xl bg-[#1F563E] py-3 text-sm font-semibold text-[#FFFDF7] hover:bg-[#17422F] disabled:opacity-60 cursor-pointer"
                 >
                   {authLoading ? 'Mengaktifkan...' : 'Aktifkan Dashboard Administrator'}
                 </button>
@@ -464,18 +460,17 @@ export function AdminView({
             </>
           ) : bootstrap?.envPasscodeConfigured ? (
             <>
-              <h1 className="mt-3 font-editorial text-2xl font-semibold text-[#1A2B22]">
+              <h1 className="mt-3 font-editorial text-2xl font-bold text-[#173326]">
                 Masuk Dashboard Administrator
               </h1>
-              <p className="mt-2 text-sm text-[#4A5D52]">
-                Masukkan passcode administrator atau gunakan akun admin terdaftar untuk mengakses
-                pengelolaan perpustakaan.
+              <p className="mt-2 text-sm text-[#456354]">
+                Masukkan passcode administrator untuk mengakses pengelolaan perpustakaan.
               </p>
 
               {authError && (
                 <div
                   role="alert"
-                  className="mt-4 rounded-lg border border-[#D8B4B4] bg-[#FBF2F2] px-3.5 py-2.5 text-sm text-[#7F2D2D]"
+                  className="mt-4 rounded-xl border border-[#E69A7E] bg-[#FCEAE3] px-3.5 py-2.5 text-sm text-[#9B3318]"
                 >
                   {authError}
                 </div>
@@ -485,7 +480,7 @@ export function AdminView({
                 <div>
                   <label
                     htmlFor="admin-passcode"
-                    className="block text-sm font-medium text-[#1A2B22]"
+                    className="block text-sm font-semibold text-[#173326]"
                   >
                     Passcode Administrator
                   </label>
@@ -496,13 +491,13 @@ export function AdminView({
                     value={passcodeInput}
                     onChange={(e) => setPasscodeInput(e.target.value)}
                     placeholder="Masukkan passcode"
-                    className="mt-1.5 h-11 w-full rounded-lg border border-[#CBD3CA] bg-white px-3.5 text-sm focus:border-[#214232] focus:outline-none"
+                    className="mt-1.5 h-11 w-full rounded-xl border border-[#D8D2C2] bg-white px-3.5 text-sm focus:border-[#1F563E] focus:outline-none"
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={authLoading}
-                  className="w-full rounded-lg bg-[#214232] py-3 text-sm font-medium text-[#FBF9F4] hover:bg-[#183326] disabled:opacity-60 cursor-pointer"
+                  className="w-full rounded-xl bg-[#1F563E] py-3 text-sm font-semibold text-[#FFFDF7] hover:bg-[#17422F] disabled:opacity-60 cursor-pointer"
                 >
                   {authLoading ? 'Memverifikasi...' : 'Masuk dengan Passcode'}
                 </button>
@@ -510,10 +505,10 @@ export function AdminView({
             </>
           ) : (
             <>
-              <h1 className="mt-3 font-editorial text-2xl font-semibold text-[#1A2B22]">
+              <h1 className="mt-3 font-editorial text-2xl font-bold text-[#173326]">
                 Masuk sebagai Administrator
               </h1>
-              <p className="mt-2 text-sm text-[#4A5D52]">
+              <p className="mt-2 text-sm text-[#456354]">
                 Halaman ini khusus pengelola perpustakaan. Masuk dengan email dan kata sandi
                 administrator Anda.
               </p>
@@ -521,7 +516,7 @@ export function AdminView({
               {authError && (
                 <div
                   role="alert"
-                  className="mt-4 rounded-lg border border-[#D8B4B4] bg-[#FBF2F2] px-3.5 py-2.5 text-sm text-[#7F2D2D]"
+                  className="mt-4 rounded-xl border border-[#E69A7E] bg-[#FCEAE3] px-3.5 py-2.5 text-sm text-[#9B3318]"
                 >
                   {authError}
                 </div>
@@ -529,7 +524,7 @@ export function AdminView({
 
               <form onSubmit={handleAdminEmailLogin} className="mt-5 space-y-4">
                 <div>
-                  <label htmlFor="adm-email" className="block text-sm font-medium text-[#1A2B22]">
+                  <label htmlFor="adm-email" className="block text-sm font-semibold text-[#173326]">
                     Email Administrator
                   </label>
                   <input
@@ -538,11 +533,11 @@ export function AdminView({
                     required
                     value={authEmail}
                     onChange={(e) => setAuthEmail(e.target.value)}
-                    className="mt-1.5 h-11 w-full rounded-lg border border-[#CBD3CA] bg-white px-3.5 text-sm focus:border-[#214232] focus:outline-none"
+                    className="mt-1.5 h-11 w-full rounded-xl border border-[#D8D2C2] bg-white px-3.5 text-sm focus:border-[#1F563E] focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label htmlFor="adm-pass" className="block text-sm font-medium text-[#1A2B22]">
+                  <label htmlFor="adm-pass" className="block text-sm font-semibold text-[#173326]">
                     Kata Sandi
                   </label>
                   <input
@@ -551,13 +546,13 @@ export function AdminView({
                     required
                     value={authPassword}
                     onChange={(e) => setAuthPassword(e.target.value)}
-                    className="mt-1.5 h-11 w-full rounded-lg border border-[#CBD3CA] bg-white px-3.5 text-sm focus:border-[#214232] focus:outline-none"
+                    className="mt-1.5 h-11 w-full rounded-xl border border-[#D8D2C2] bg-white px-3.5 text-sm focus:border-[#1F563E] focus:outline-none"
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={authLoading}
-                  className="w-full rounded-lg bg-[#214232] py-3 text-sm font-medium text-[#FBF9F4] hover:bg-[#183326] disabled:opacity-60 cursor-pointer"
+                  className="w-full rounded-xl bg-[#1F563E] py-3 text-sm font-semibold text-[#FFFDF7] hover:bg-[#17422F] disabled:opacity-60 cursor-pointer"
                 >
                   {authLoading ? 'Memverifikasi...' : 'Masuk ke Dashboard'}
                 </button>
@@ -569,7 +564,6 @@ export function AdminView({
     );
   }
 
-  // --- Authenticated Admin Dashboard ---
   const q = tableSearch.trim().toLowerCase();
   const filteredBooks = books.filter(
     (b) =>
@@ -591,12 +585,12 @@ export function AdminView({
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-      <div className="flex flex-col justify-between gap-4 border-b border-[#DFDDD2] pb-6 sm:flex-row sm:items-end">
+      <div className="flex flex-col justify-between gap-4 rounded-3xl border border-[#E6E0D0] bg-gradient-to-r from-[#EFF7F0] via-[#FFFDF7] to-[#FEF8E7] p-6 sm:flex-row sm:items-end sm:p-8">
         <div>
-          <p className="text-xs font-medium uppercase tracking-wider text-[#4A5D52]">
+          <p className="text-xs font-semibold uppercase tracking-wider text-[#1F563E]">
             Dashboard Administrator
           </p>
-          <h1 className="mt-1 font-editorial text-3xl font-semibold text-[#1A2B22]">
+          <h1 className="mt-1 font-editorial text-3xl font-bold text-[#173326]">
             Pengelolaan Koleksi & Anggota
           </h1>
         </div>
@@ -604,7 +598,7 @@ export function AdminView({
         <button
           type="button"
           onClick={openCreateBookModal}
-          className="inline-flex items-center gap-2 rounded-lg bg-[#214232] px-4 py-2.5 text-sm font-medium text-[#FBF9F4] hover:bg-[#183326] whitespace-nowrap cursor-pointer"
+          className="inline-flex items-center gap-2 rounded-xl bg-[#1F563E] px-4 py-2.5 text-sm font-semibold text-[#FFFDF7] hover:bg-[#17422F] whitespace-nowrap cursor-pointer"
         >
           <Plus className="h-4 w-4" aria-hidden="true" />
           <span>Tambah Buku Baru</span>
@@ -612,31 +606,31 @@ export function AdminView({
       </div>
 
       {/* 4 KPI Strip */}
-      <div className="mt-6 grid grid-cols-2 divide-y divide-[#DFDDD2] rounded-xl border border-[#DFDDD2] bg-[#FBF9F4] sm:grid-cols-4 sm:divide-x sm:divide-y-0">
+      <div className="mt-6 grid grid-cols-2 divide-y divide-[#E6E0D0] rounded-2xl border border-[#E6E0D0] bg-white sm:grid-cols-4 sm:divide-x sm:divide-y-0">
         <div className="p-5">
-          <p className="text-xs font-medium text-[#4A5D52]">Total Judul Buku</p>
-          <p className="mt-1 font-mono text-2xl font-medium tabular-nums text-[#1A2B22]">
+          <p className="text-xs font-semibold text-[#456354]">Total Judul Buku</p>
+          <p className="mt-1 font-mono text-2xl font-semibold tabular-nums text-[#1F563E]">
             {overview?.stats.totalTitles ?? books.length}
           </p>
         </div>
         <div className="p-5">
-          <p className="text-xs font-medium text-[#4A5D52]">Eksemplar Tersedia</p>
-          <p className="mt-1 font-mono text-2xl font-medium tabular-nums text-[#1A2B22]">
+          <p className="text-xs font-semibold text-[#456354]">Eksemplar Tersedia</p>
+          <p className="mt-1 font-mono text-2xl font-semibold tabular-nums text-[#1F563E]">
             {overview?.stats.availableCopies ?? books.reduce((s, b) => s + b.availableCopies, 0)}{' '}
-            <span className="text-sm font-normal text-[#4A5D52]">
+            <span className="text-sm font-normal text-[#456354]">
               / {overview?.stats.totalCopies ?? books.reduce((s, b) => s + b.totalCopies, 0)}
             </span>
           </p>
         </div>
         <div className="p-5">
-          <p className="text-xs font-medium text-[#4A5D52]">Anggota Terdaftar</p>
-          <p className="mt-1 font-mono text-2xl font-medium tabular-nums text-[#1A2B22]">
+          <p className="text-xs font-semibold text-[#456354]">Anggota Terdaftar</p>
+          <p className="mt-1 font-mono text-2xl font-semibold tabular-nums text-[#1F563E]">
             {overview?.stats.totalMembers ?? 0}
           </p>
         </div>
         <div className="p-5">
-          <p className="text-xs font-medium text-[#4A5D52]">Peminjaman Aktif</p>
-          <p className="mt-1 font-mono text-2xl font-medium tabular-nums text-[#1A2B22]">
+          <p className="text-xs font-semibold text-[#456354]">Peminjaman Aktif</p>
+          <p className="mt-1 font-mono text-2xl font-semibold tabular-nums text-[#1F563E]">
             {overview?.stats.activeLoans ?? 0}
           </p>
         </div>
@@ -644,7 +638,7 @@ export function AdminView({
 
       {/* Tabs & Table Search */}
       <div className="mt-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-        <div role="tablist" className="flex gap-1 rounded-lg bg-[#EDEAE0] p-1">
+        <div role="tablist" aria-label="Menu administrator" className="flex gap-1 rounded-xl bg-[#F3EFE2] p-1">
           {[
             { id: 'books', label: 'Koleksi Buku' },
             { id: 'members', label: 'Anggota' },
@@ -656,10 +650,10 @@ export function AdminView({
               role="tab"
               aria-selected={activeTab === tab.id}
               onClick={() => setActiveTab(tab.id as 'books' | 'members' | 'loans')}
-              className={`rounded-md px-4 py-2 text-sm font-medium transition-colors whitespace-nowrap cursor-pointer ${
+              className={`rounded-lg px-4 py-2 text-sm font-semibold transition-colors whitespace-nowrap cursor-pointer ${
                 activeTab === tab.id
-                  ? 'bg-[#FBF9F4] text-[#1A2B22] shadow-xs'
-                  : 'text-[#4A5D52] hover:text-[#1A2B22]'
+                  ? 'bg-white text-[#173326] shadow-xs'
+                  : 'text-[#456354] hover:text-[#173326]'
               }`}
             >
               {tab.label}
@@ -669,48 +663,52 @@ export function AdminView({
 
         <div className="relative w-full sm:w-72">
           <Search
-            className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#4A5D52]"
+            className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#456354]"
             aria-hidden="true"
           />
+          <label htmlFor="admin-table-search" className="sr-only">
+            Cari data pada tabel
+          </label>
           <input
+            id="admin-table-search"
             type="search"
             value={tableSearch}
             onChange={(e) => setTableSearch(e.target.value)}
             placeholder="Cari di tabel ini..."
-            className="h-10 w-full rounded-lg border border-[#CBD3CA] bg-[#FBF9F4] pr-3 pl-9 text-sm text-[#1A2B22] focus:border-[#214232] focus:outline-none"
+            className="h-10 w-full rounded-xl border border-[#D8D2C2] bg-white pr-3 pl-9 text-sm text-[#173326] focus:border-[#1F563E] focus:outline-none"
           />
         </div>
       </div>
 
       {/* Tab Content */}
-      <div className="mt-5 overflow-x-auto rounded-xl border border-[#DFDDD2] bg-[#FBF9F4]">
+      <div className="mt-5 overflow-x-auto rounded-2xl border border-[#E6E0D0] bg-white">
         {loadingOverview && !overview ? (
-          <div className="p-8 text-center text-sm text-[#4A5D52]">Memuat data dashboard...</div>
+          <div className="p-8 text-center text-sm text-[#456354]">Memuat data dashboard...</div>
         ) : activeTab === 'books' ? (
           <table className="w-full text-left text-sm">
-            <thead className="border-b border-[#DFDDD2] bg-[#F0ECE1]/70 text-xs text-[#4A5D52]">
+            <thead className="border-b border-[#E6E0D0] bg-[#FAF6EC] text-xs text-[#456354]">
               <tr>
-                <th className="px-4 py-3 font-medium">Judul & Penulis</th>
-                <th className="px-4 py-3 font-medium">Kategori</th>
-                <th className="px-4 py-3 font-medium text-right">Stok</th>
-                <th className="px-4 py-3 font-medium text-right">Dibaca</th>
-                <th className="px-4 py-3 font-medium text-right">Aksi</th>
+                <th className="px-4 py-3 font-semibold">Judul & Penulis</th>
+                <th className="px-4 py-3 font-semibold">Kategori</th>
+                <th className="px-4 py-3 font-semibold text-right">Stok</th>
+                <th className="px-4 py-3 font-semibold text-right">Dibaca</th>
+                <th className="px-4 py-3 font-semibold text-right">Aksi</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E8E4D9]">
+            <tbody className="divide-y divide-[#EFEAE0]">
               {filteredBooks.map((book) => (
-                <tr key={book.id} className="hover:bg-[#F8F5EE]">
+                <tr key={book.id} className="hover:bg-[#FFFDF7]">
                   <td className="px-4 py-3">
-                    <p className="font-medium text-[#1A2B22]">{book.title}</p>
-                    <p className="text-xs text-[#4A5D52]">
+                    <p className="font-semibold text-[#173326]">{book.title}</p>
+                    <p className="text-xs text-[#456354]">
                       {book.author} · <span className="font-mono">{book.isbn}</span>
                     </p>
                   </td>
-                  <td className="px-4 py-3 text-xs text-[#4A5D52]">{book.category}</td>
-                  <td className="px-4 py-3 text-right font-mono text-xs tabular-nums text-[#1A2B22]">
+                  <td className="px-4 py-3 text-xs text-[#456354]">{book.category}</td>
+                  <td className="px-4 py-3 text-right font-mono text-xs tabular-nums text-[#173326]">
                     {book.availableCopies} / {book.totalCopies}
                   </td>
-                  <td className="px-4 py-3 text-right font-mono text-xs tabular-nums text-[#4A5D52]">
+                  <td className="px-4 py-3 text-right font-mono text-xs tabular-nums text-[#456354]">
                     {book.readCount}
                   </td>
                   <td className="px-4 py-3 text-right">
@@ -719,14 +717,14 @@ export function AdminView({
                         <button
                           type="button"
                           onClick={() => handleDeleteBook(book.id)}
-                          className="rounded-md bg-[#8C2F2F] px-2.5 py-1 text-xs font-medium text-white cursor-pointer"
+                          className="rounded-lg bg-[#A13B22] px-2.5 py-1 text-xs font-semibold text-white cursor-pointer"
                         >
                           Ya, Hapus
                         </button>
                         <button
                           type="button"
                           onClick={() => setConfirmDeleteId(null)}
-                          className="rounded-md border border-[#CBD3CA] px-2.5 py-1 text-xs text-[#4A5D52] cursor-pointer"
+                          className="rounded-lg border border-[#D8D2C2] px-2.5 py-1 text-xs text-[#456354] cursor-pointer"
                         >
                           Batal
                         </button>
@@ -737,7 +735,7 @@ export function AdminView({
                           type="button"
                           onClick={() => openEditBookModal(book)}
                           aria-label={`Edit ${book.title}`}
-                          className="rounded-lg border border-[#CBD3CA] p-2 text-[#1A2B22] hover:bg-[#EDF1EC] cursor-pointer"
+                          className="rounded-xl border border-[#D8D2C2] p-2 text-[#173326] hover:bg-[#EFF7F0] cursor-pointer"
                         >
                           <Edit2 className="h-3.5 w-3.5" />
                         </button>
@@ -745,7 +743,7 @@ export function AdminView({
                           type="button"
                           onClick={() => setConfirmDeleteId(book.id)}
                           aria-label={`Hapus ${book.title}`}
-                          className="rounded-lg border border-[#DFCCCC] p-2 text-[#7F2D2D] hover:bg-[#FBF2F2] cursor-pointer"
+                          className="rounded-xl border border-[#F0CFC0] p-2 text-[#A13B22] hover:bg-[#FCEAE3] cursor-pointer"
                         >
                           <Trash2 className="h-3.5 w-3.5" />
                         </button>
@@ -756,7 +754,7 @@ export function AdminView({
               ))}
               {filteredBooks.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="px-4 py-8 text-center text-sm text-[#4A5D52]">
+                  <td colSpan={5} className="px-4 py-8 text-center text-sm text-[#456354]">
                     Tidak ada buku ditemukan.
                   </td>
                 </tr>
@@ -765,55 +763,55 @@ export function AdminView({
           </table>
         ) : activeTab === 'members' ? (
           <table className="w-full text-left text-sm">
-            <thead className="border-b border-[#DFDDD2] bg-[#F0ECE1]/70 text-xs text-[#4A5D52]">
+            <thead className="border-b border-[#E6E0D0] bg-[#FAF6EC] text-xs text-[#456354]">
               <tr>
-                <th className="px-4 py-3 font-medium">Nama & Email</th>
-                <th className="px-4 py-3 font-medium">Peran</th>
-                <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium text-right">Pinjaman Aktif</th>
-                <th className="px-4 py-3 font-medium text-right">Kelola</th>
+                <th className="px-4 py-3 font-semibold">Nama & Email</th>
+                <th className="px-4 py-3 font-semibold">Peran</th>
+                <th className="px-4 py-3 font-semibold">Status</th>
+                <th className="px-4 py-3 font-semibold text-right">Pinjaman Aktif</th>
+                <th className="px-4 py-3 font-semibold text-right">Kelola</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E8E4D9]">
+            <tbody className="divide-y divide-[#EFEAE0]">
               {filteredMembers.map((member) => {
                 const isSelf = member.id === currentUser?.id;
                 return (
-                  <tr key={member.id} className="hover:bg-[#F8F5EE]">
+                  <tr key={member.id} className="hover:bg-[#FFFDF7]">
                     <td className="px-4 py-3">
-                      <p className="font-medium text-[#1A2B22]">{member.name}</p>
-                      <p className="text-xs text-[#4A5D52]">{member.email}</p>
+                      <p className="font-semibold text-[#173326]">{member.name}</p>
+                      <p className="text-xs text-[#456354]">{member.email}</p>
                     </td>
-                    <td className="px-4 py-3 text-xs text-[#1A2B22]">
+                    <td className="px-4 py-3 text-xs text-[#173326]">
                       {member.role === 'admin' ? 'Administrator' : 'Anggota'}
                     </td>
-                    <td className="px-4 py-3 text-xs font-medium">
+                    <td className="px-4 py-3 text-xs font-semibold">
                       <span
                         className={
-                          member.status === 'active' ? 'text-[#214232]' : 'text-[#8C2F2F]'
+                          member.status === 'active' ? 'text-[#1F563E]' : 'text-[#A13B22]'
                         }
                       >
                         {member.status === 'active' ? 'Aktif' : 'Ditangguhkan'}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-right font-mono text-xs tabular-nums text-[#1A2B22]">
+                    <td className="px-4 py-3 text-right font-mono text-xs tabular-nums text-[#173326]">
                       {member.activeLoansCount}
                     </td>
                     <td className="px-4 py-3 text-right">
                       {isSelf ? (
-                        <span className="text-xs text-[#4A5D52]">Akun Anda</span>
+                        <span className="text-xs text-[#456354]">Akun Anda</span>
                       ) : (
                         <div className="inline-flex items-center gap-2">
                           <button
                             type="button"
                             onClick={() => handleToggleMemberStatus(member)}
-                            className="rounded-lg border border-[#CBD3CA] px-2.5 py-1.5 text-xs font-medium text-[#1A2B22] hover:bg-[#EDF1EC] cursor-pointer"
+                            className="rounded-xl border border-[#D8D2C2] px-2.5 py-1.5 text-xs font-semibold text-[#173326] hover:bg-[#EFF7F0] cursor-pointer"
                           >
                             {member.status === 'active' ? 'Tangguhkan' : 'Aktifkan'}
                           </button>
                           <button
                             type="button"
                             onClick={() => handleToggleMemberRole(member)}
-                            className="rounded-lg border border-[#CBD3CA] px-2.5 py-1.5 text-xs font-medium text-[#4A5D52] hover:bg-[#EDF1EC] cursor-pointer"
+                            className="rounded-xl border border-[#D8D2C2] px-2.5 py-1.5 text-xs font-medium text-[#456354] hover:bg-[#FDF1CC] cursor-pointer"
                           >
                             {member.role === 'admin' ? 'Jadikan Anggota' : 'Jadikan Admin'}
                           </button>
@@ -825,7 +823,7 @@ export function AdminView({
               })}
               {filteredMembers.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="px-4 py-8 text-center text-sm text-[#4A5D52]">
+                  <td colSpan={5} className="px-4 py-8 text-center text-sm text-[#456354]">
                     Belum ada anggota terdaftar.
                   </td>
                 </tr>
@@ -834,28 +832,28 @@ export function AdminView({
           </table>
         ) : (
           <table className="w-full text-left text-sm">
-            <thead className="border-b border-[#DFDDD2] bg-[#F0ECE1]/70 text-xs text-[#4A5D52]">
+            <thead className="border-b border-[#E6E0D0] bg-[#FAF6EC] text-xs text-[#456354]">
               <tr>
-                <th className="px-4 py-3 font-medium">Buku</th>
-                <th className="px-4 py-3 font-medium">Peminjam</th>
-                <th className="px-4 py-3 font-medium">Jatuh Tempo</th>
-                <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium text-right">Aksi</th>
+                <th className="px-4 py-3 font-semibold">Buku</th>
+                <th className="px-4 py-3 font-semibold">Peminjam</th>
+                <th className="px-4 py-3 font-semibold">Jatuh Tempo</th>
+                <th className="px-4 py-3 font-semibold">Status</th>
+                <th className="px-4 py-3 font-semibold text-right">Aksi</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E8E4D9]">
+            <tbody className="divide-y divide-[#EFEAE0]">
               {filteredLoans.map((loan) => (
-                <tr key={loan.id} className="hover:bg-[#F8F5EE]">
-                  <td className="px-4 py-3 font-medium text-[#1A2B22]">{loan.bookTitle}</td>
+                <tr key={loan.id} className="hover:bg-[#FFFDF7]">
+                  <td className="px-4 py-3 font-semibold text-[#173326]">{loan.bookTitle}</td>
                   <td className="px-4 py-3">
-                    <p className="text-xs font-medium text-[#1A2B22]">{loan.userName}</p>
-                    <p className="text-xs text-[#4A5D52]">{loan.userEmail}</p>
+                    <p className="text-xs font-semibold text-[#173326]">{loan.userName}</p>
+                    <p className="text-xs text-[#456354]">{loan.userEmail}</p>
                   </td>
-                  <td className="px-4 py-3 font-mono text-xs tabular-nums text-[#4A5D52]">
+                  <td className="px-4 py-3 font-mono text-xs tabular-nums text-[#456354]">
                     {new Date(loan.dueAt).toLocaleDateString('id-ID')}
                   </td>
-                  <td className="px-4 py-3 text-xs font-medium">
-                    <span className={loan.status === 'active' ? 'text-[#8C4A32]' : 'text-[#214232]'}>
+                  <td className="px-4 py-3 text-xs font-semibold">
+                    <span className={loan.status === 'active' ? 'text-[#B4532A]' : 'text-[#1F563E]'}>
                       {loan.status === 'active' ? 'Dipinjam' : 'Dikembalikan'}
                     </span>
                   </td>
@@ -864,20 +862,20 @@ export function AdminView({
                       <button
                         type="button"
                         onClick={() => handleAdminReturnLoan(loan.id)}
-                        className="inline-flex items-center gap-1 rounded-lg border border-[#CBD3CA] px-2.5 py-1.5 text-xs font-medium text-[#1A2B22] hover:bg-[#EDF1EC] cursor-pointer"
+                        className="inline-flex items-center gap-1 rounded-xl border border-[#D8D2C2] px-2.5 py-1.5 text-xs font-semibold text-[#173326] hover:bg-[#EFF7F0] cursor-pointer"
                       >
                         <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
                         <span>Tandai Dikembalikan</span>
                       </button>
                     ) : (
-                      <span className="text-xs text-[#4A5D52]">Selesai</span>
+                      <span className="text-xs text-[#456354]">Selesai</span>
                     )}
                   </td>
                 </tr>
               ))}
               {filteredLoans.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="px-4 py-8 text-center text-sm text-[#4A5D52]">
+                  <td colSpan={5} className="px-4 py-8 text-center text-sm text-[#456354]">
                     Belum ada catatan peminjaman.
                   </td>
                 </tr>
@@ -893,18 +891,21 @@ export function AdminView({
           role="dialog"
           aria-modal="true"
           aria-labelledby="book-modal-title"
-          className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-[#1A2B22]/45 p-4 backdrop-blur-[2px]"
+          className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-[#173326]/40 p-4 backdrop-blur-[2px]"
         >
-          <div className="my-8 w-full max-w-2xl rounded-2xl border border-[#DFDDD2] bg-[#FBF9F4] p-6 shadow-xl sm:p-8">
+          <div className="my-8 w-full max-w-2xl rounded-3xl border border-[#E6E0D0] bg-[#FFFDF7] p-6 shadow-xl sm:p-8">
             <div className="flex items-start justify-between gap-4">
-              <h2 id="book-modal-title" className="font-editorial text-2xl font-semibold text-[#1A2B22]">
+              <h2
+                id="book-modal-title"
+                className="font-editorial text-2xl font-bold text-[#173326]"
+              >
                 {editingBookId ? 'Edit Koleksi Buku' : 'Tambah Buku Baru'}
               </h2>
               <button
                 type="button"
                 onClick={() => setBookModalOpen(false)}
                 aria-label="Tutup form buku"
-                className="rounded-lg p-1.5 text-[#4A5D52] hover:bg-[#EDF1EC] cursor-pointer"
+                className="rounded-xl p-1.5 text-[#456354] hover:bg-[#EFF7F0] cursor-pointer"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -913,7 +914,7 @@ export function AdminView({
             {bookFormError && (
               <div
                 role="alert"
-                className="mt-4 rounded-lg border border-[#D8B4B4] bg-[#FBF2F2] px-3.5 py-2.5 text-sm text-[#7F2D2D]"
+                className="mt-4 rounded-xl border border-[#E69A7E] bg-[#FCEAE3] px-3.5 py-2.5 text-sm text-[#9B3318]"
               >
                 {bookFormError}
               </div>
@@ -922,36 +923,45 @@ export function AdminView({
             <form onSubmit={handleSaveBook} className="mt-5 space-y-4">
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="block text-sm font-medium text-[#1A2B22]">Judul Buku</label>
+                  <label htmlFor="book-title" className="block text-sm font-semibold text-[#173326]">
+                    Judul Buku
+                  </label>
                   <input
+                    id="book-title"
                     type="text"
                     required
                     value={bookForm.title}
                     onChange={(e) => setBookForm({ ...bookForm, title: e.target.value })}
-                    className="mt-1 h-10 w-full rounded-lg border border-[#CBD3CA] bg-white px-3 text-sm focus:border-[#214232] focus:outline-none"
+                    className="mt-1 h-10 w-full rounded-xl border border-[#D8D2C2] bg-white px-3 text-sm focus:border-[#1F563E] focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-[#1A2B22]">Penulis</label>
+                  <label htmlFor="book-author" className="block text-sm font-semibold text-[#173326]">
+                    Penulis
+                  </label>
                   <input
+                    id="book-author"
                     type="text"
                     required
                     value={bookForm.author}
                     onChange={(e) => setBookForm({ ...bookForm, author: e.target.value })}
-                    className="mt-1 h-10 w-full rounded-lg border border-[#CBD3CA] bg-white px-3 text-sm focus:border-[#214232] focus:outline-none"
+                    className="mt-1 h-10 w-full rounded-xl border border-[#D8D2C2] bg-white px-3 text-sm focus:border-[#1F563E] focus:outline-none"
                   />
                 </div>
               </div>
 
               <div className="grid gap-4 sm:grid-cols-3">
                 <div>
-                  <label className="block text-sm font-medium text-[#1A2B22]">Kategori</label>
+                  <label htmlFor="book-cat" className="block text-sm font-semibold text-[#173326]">
+                    Kategori
+                  </label>
                   <select
+                    id="book-cat"
                     value={bookForm.category}
                     onChange={(e) =>
                       setBookForm({ ...bookForm, category: e.target.value as BookCategory })
                     }
-                    className="mt-1 h-10 w-full rounded-lg border border-[#CBD3CA] bg-white px-3 text-sm focus:border-[#214232] focus:outline-none"
+                    className="mt-1 h-10 w-full rounded-xl border border-[#D8D2C2] bg-white px-3 text-sm focus:border-[#1F563E] focus:outline-none"
                   >
                     {CATEGORIES.map((c) => (
                       <option key={c} value={c}>
@@ -961,19 +971,25 @@ export function AdminView({
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-[#1A2B22]">Tahun Terbit</label>
+                  <label htmlFor="book-year" className="block text-sm font-semibold text-[#173326]">
+                    Tahun Terbit
+                  </label>
                   <input
+                    id="book-year"
                     type="number"
                     min={1900}
                     max={2100}
                     value={bookForm.year}
                     onChange={(e) => setBookForm({ ...bookForm, year: Number(e.target.value) })}
-                    className="mt-1 h-10 w-full rounded-lg border border-[#CBD3CA] bg-white px-3 text-sm focus:border-[#214232] focus:outline-none"
+                    className="mt-1 h-10 w-full rounded-xl border border-[#D8D2C2] bg-white px-3 text-sm focus:border-[#1F563E] focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-[#1A2B22]">Jumlah Stok</label>
+                  <label htmlFor="book-copies" className="block text-sm font-semibold text-[#173326]">
+                    Jumlah Stok
+                  </label>
                   <input
+                    id="book-copies"
                     type="number"
                     min={1}
                     max={200}
@@ -981,46 +997,58 @@ export function AdminView({
                     onChange={(e) =>
                       setBookForm({ ...bookForm, totalCopies: Number(e.target.value) })
                     }
-                    className="mt-1 h-10 w-full rounded-lg border border-[#CBD3CA] bg-white px-3 text-sm focus:border-[#214232] focus:outline-none"
+                    className="mt-1 h-10 w-full rounded-xl border border-[#D8D2C2] bg-white px-3 text-sm focus:border-[#1F563E] focus:outline-none"
                   />
                 </div>
               </div>
 
               <div className="grid gap-4 sm:grid-cols-3">
                 <div>
-                  <label className="block text-sm font-medium text-[#1A2B22]">Penerbit</label>
+                  <label htmlFor="book-pub" className="block text-sm font-semibold text-[#173326]">
+                    Penerbit
+                  </label>
                   <input
+                    id="book-pub"
                     type="text"
                     value={bookForm.publisher}
                     onChange={(e) => setBookForm({ ...bookForm, publisher: e.target.value })}
-                    className="mt-1 h-10 w-full rounded-lg border border-[#CBD3CA] bg-white px-3 text-sm focus:border-[#214232] focus:outline-none"
+                    className="mt-1 h-10 w-full rounded-xl border border-[#D8D2C2] bg-white px-3 text-sm focus:border-[#1F563E] focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-[#1A2B22]">ISBN</label>
+                  <label htmlFor="book-isbn" className="block text-sm font-semibold text-[#173326]">
+                    ISBN
+                  </label>
                   <input
+                    id="book-isbn"
                     type="text"
                     value={bookForm.isbn}
                     onChange={(e) => setBookForm({ ...bookForm, isbn: e.target.value })}
                     placeholder="978-623-..."
-                    className="mt-1 h-10 w-full rounded-lg border border-[#CBD3CA] bg-white px-3 text-sm focus:border-[#214232] focus:outline-none"
+                    className="mt-1 h-10 w-full rounded-xl border border-[#D8D2C2] bg-white px-3 text-sm focus:border-[#1F563E] focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-[#1A2B22]">Halaman</label>
+                  <label htmlFor="book-pages" className="block text-sm font-semibold text-[#173326]">
+                    Halaman
+                  </label>
                   <input
+                    id="book-pages"
                     type="number"
                     min={1}
                     value={bookForm.pages}
                     onChange={(e) => setBookForm({ ...bookForm, pages: Number(e.target.value) })}
-                    className="mt-1 h-10 w-full rounded-lg border border-[#CBD3CA] bg-white px-3 text-sm focus:border-[#214232] focus:outline-none"
+                    className="mt-1 h-10 w-full rounded-xl border border-[#D8D2C2] bg-white px-3 text-sm focus:border-[#1F563E] focus:outline-none"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-[#1A2B22]">Desain Sampul</label>
+                <label htmlFor="book-cover" className="block text-sm font-semibold text-[#173326]">
+                  Desain Sampul
+                </label>
                 <select
+                  id="book-cover"
                   value={bookForm.coverUrl}
                   onChange={(e) => {
                     const preset = COVER_PRESETS.find((p) => p.url === e.target.value);
@@ -1030,7 +1058,7 @@ export function AdminView({
                       coverTone: preset?.tone || 'cream-sage',
                     });
                   }}
-                  className="mt-1 h-10 w-full rounded-lg border border-[#CBD3CA] bg-white px-3 text-sm focus:border-[#214232] focus:outline-none"
+                  className="mt-1 h-10 w-full rounded-xl border border-[#D8D2C2] bg-white px-3 text-sm focus:border-[#1F563E] focus:outline-none"
                 >
                   {COVER_PRESETS.map((preset) => (
                     <option key={preset.url} value={preset.url}>
@@ -1041,14 +1069,14 @@ export function AdminView({
               </div>
 
               <div>
-                <p className="text-sm font-medium text-[#1A2B22]">Fitur Aksesibilitas</p>
+                <p className="text-sm font-semibold text-[#173326]">Fitur Aksesibilitas</p>
                 <div className="mt-2 flex flex-wrap gap-3">
                   {ACCESSIBILITY_FEATURES.map((feat) => {
                     const checked = bookForm.accessibilityFeatures.includes(feat);
                     return (
                       <label
                         key={feat}
-                        className="inline-flex items-center gap-2 text-sm text-[#3D5245] cursor-pointer"
+                        className="inline-flex items-center gap-2 text-sm text-[#3E584A] cursor-pointer"
                       >
                         <input
                           type="checkbox"
@@ -1059,7 +1087,7 @@ export function AdminView({
                               : [...bookForm.accessibilityFeatures, feat];
                             setBookForm({ ...bookForm, accessibilityFeatures: next });
                           }}
-                          className="h-4 w-4 accent-[#214232]"
+                          className="h-4 w-4 accent-[#1F563E]"
                         />
                         <span>{feat}</span>
                       </label>
@@ -1069,53 +1097,57 @@ export function AdminView({
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-[#1A2B22]">Sinopsis</label>
+                <label htmlFor="book-synopsis" className="block text-sm font-semibold text-[#173326]">
+                  Sinopsis
+                </label>
                 <textarea
+                  id="book-synopsis"
                   rows={3}
                   required
                   value={bookForm.synopsis}
                   onChange={(e) => setBookForm({ ...bookForm, synopsis: e.target.value })}
-                  className="mt-1 w-full rounded-lg border border-[#CBD3CA] bg-white p-3 text-sm focus:border-[#214232] focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-[#D8D2C2] bg-white p-3 text-sm focus:border-[#1F563E] focus:outline-none"
                 />
               </div>
 
               {!editingBookId && (
                 <div>
-                  <label className="block text-sm font-medium text-[#1A2B22]">
+                  <label htmlFor="book-chapter" className="block text-sm font-semibold text-[#173326]">
                     Isi Bab Pertama (untuk Digital Reader)
                   </label>
                   <textarea
+                    id="book-chapter"
                     rows={4}
                     value={bookForm.chapterBody}
                     onChange={(e) => setBookForm({ ...bookForm, chapterBody: e.target.value })}
                     placeholder="Tulis paragraf pembuka buku agar bisa langsung dibaca di Digital Reader..."
-                    className="mt-1 w-full rounded-lg border border-[#CBD3CA] bg-white p-3 text-sm focus:border-[#214232] focus:outline-none"
+                    className="mt-1 w-full rounded-xl border border-[#D8D2C2] bg-white p-3 text-sm focus:border-[#1F563E] focus:outline-none"
                   />
                 </div>
               )}
 
-              <label className="inline-flex items-center gap-2 text-sm text-[#1A2B22] cursor-pointer">
+              <label className="inline-flex items-center gap-2 text-sm text-[#173326] cursor-pointer">
                 <input
                   type="checkbox"
                   checked={bookForm.featured}
                   onChange={(e) => setBookForm({ ...bookForm, featured: e.target.checked })}
-                  className="h-4 w-4 accent-[#214232]"
+                  className="h-4 w-4 accent-[#1F563E]"
                 />
-                <span>Tampilkan di Koleksi Pilihan Beranda</span>
+                <span>Tampilkan di Rekomendasi Hangat Beranda</span>
               </label>
 
-              <div className="flex justify-end gap-3 border-t border-[#DFDDD2] pt-4">
+              <div className="flex justify-end gap-3 border-t border-[#E6E0D0] pt-4">
                 <button
                   type="button"
                   onClick={() => setBookModalOpen(false)}
-                  className="rounded-lg border border-[#CBD3CA] px-4 py-2.5 text-sm font-medium text-[#1A2B22] hover:bg-[#EDF1EC] cursor-pointer"
+                  className="rounded-xl border border-[#D8D2C2] px-4 py-2.5 text-sm font-semibold text-[#173326] hover:bg-[#EFF7F0] cursor-pointer"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
                   disabled={bookSaving}
-                  className="rounded-lg bg-[#214232] px-5 py-2.5 text-sm font-medium text-[#FBF9F4] hover:bg-[#183326] disabled:opacity-60 cursor-pointer"
+                  className="rounded-xl bg-[#1F563E] px-5 py-2.5 text-sm font-semibold text-[#FFFDF7] hover:bg-[#17422F] disabled:opacity-60 cursor-pointer"
                 >
                   {bookSaving ? 'Menyimpan...' : editingBookId ? 'Simpan Perubahan' : 'Simpan Buku'}
                 </button>
