@@ -1,0 +1,6 @@
+{
+  "name": "SENA LIBRARY",
+  "description": "Perpustakaan digital inklusif yang ramah, tenang, dan mudah diakses oleh semua kalangan.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
