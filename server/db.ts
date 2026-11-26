@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
 import {
   AdminMemberRow,
@@ -22,7 +23,9 @@ interface LibraryDatabase {
   loans: Loan[];
 }
 
-const DATA_DIR = path.resolve(process.cwd(), 'data');
+const DATA_DIR = process.env.VERCEL
+  ? path.join(os.tmpdir(), 'sena-library-data')
+  : path.resolve(process.cwd(), 'data');
 const DB_PATH = path.join(DATA_DIR, 'sena-library.json');
 
 // Signing secret stays in process memory if SESSION_SECRET env var is absent
